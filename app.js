@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require("mongoose");
+const initRoutes = require("./routes");
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +17,8 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ extended: true }));
+
+initRoutes(app);
 
 const PORT = config.get('port') || 5000;
 
