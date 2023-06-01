@@ -36,6 +36,7 @@ router.post(
             const user = new User({
                 email,
                 password: hashedPassword,
+                disabledAlarms: [],
             });
 
             await user.save();
