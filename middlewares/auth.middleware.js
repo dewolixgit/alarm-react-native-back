@@ -9,7 +9,7 @@ const authMiddleware = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1]; // Bearer <TOKEN>
 
         if (!token) {
-            return res.status(401).json({ message: 'Not authorized' });
+            return res.status(401).json({ message: 'Нет авторизации' });
         }
 
         // should get { userId: ..., ... }
@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
 
         next();
     } catch (e) {
-        res.status(401).json({ message: 'Not authorized' });
+        res.status(401).json({ message: 'Нет авторизации' });
     }
 };
 

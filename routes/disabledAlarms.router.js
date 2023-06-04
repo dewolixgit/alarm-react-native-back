@@ -16,21 +16,21 @@ router.post(
             const { hours, minutes, offOption } = req.body;
 
             if (!isNaturalNumber(hours) || hours >= 24) {
-                return res.status(400).json({ message: 'Incorrect hours field' })
+                return res.status(400).json({ message: 'Некорректное значение часа' })
             }
 
             if (!isNaturalNumber(minutes) || minutes >= 60) {
-                return res.status(400).json({ message: 'Incorrect minutes field' })
+                return res.status(400).json({ message: 'Некорректное значение минут' })
             }
 
             if (!isOffOption(offOption)) {
-                return res.status(400).json({ message: 'Incorrect offOption field' })
+                return res.status(400).json({ message: 'Некорректное значение способа выключения' })
             }
 
             const user = await User.findOne({ _id: req.userId });
 
             if (!user) {
-                return res.status(400).json({ message: 'There is no user with the requested id' })
+                return res.status(400).json({ message: 'Пользователь не найден' })
             }
 
             user.disabledAlarms.push({
@@ -47,7 +47,7 @@ router.post(
         }
         catch (e) {
             console.log(e)
-            res.status(500).json({message: 'Something has gone wrong'});
+            res.status(500).json({message: 'Что-то пошло не так'});
         }
     }
 );
@@ -61,7 +61,7 @@ router.get(
             const user = await User.findOne({ _id: req.userId });
 
             if (!user) {
-                return res.status(400).json({ message: 'There is no user with the requested id' })
+                return res.status(400).json({ message: 'Пользователь не найден' })
             }
 
             res.json({
@@ -70,7 +70,7 @@ router.get(
         }
         catch (e) {
             console.log(e)
-            res.status(500).json({message: 'Something has gone wrong'});
+            res.status(500).json({message: 'Что-то пошло не так'});
         }
     }
 );
@@ -84,19 +84,19 @@ router.post(
             const { id } = req.body;
 
             if (!isValidIdString(id)) {
-                return res.status(400).json({ message: 'Incorrect id field' })
+                return res.status(400).json({ message: 'Некорректное значение id' })
             }
 
             const user = await User.findOne({ _id: req.userId });
 
             if (!user) {
-                return res.status(400).json({ message: 'There is no user with the requested id' })
+                return res.status(400).json({ message: 'Пользователь не найден' })
             }
 
             const toDelete = user.disabledAlarms.id(id);
 
             if (!toDelete) {
-                return res.status(400).json({ message: 'There is no disabled alarm with the requested id' })
+                return res.status(400).json({ message: 'Запись не найдена' })
             }
 
             toDelete.deleteOne();
@@ -109,7 +109,7 @@ router.post(
         }
         catch (e) {
             console.log(e)
-            res.status(500).json({message: 'Something has gone wrong'});
+            res.status(500).json({message: 'Что-то пошло не так'});
         }
     }
 );
